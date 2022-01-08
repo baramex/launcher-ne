@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        window.$ = window.jquery = require("jquery");
+    </script>
+
+    <link rel="stylesheet" href="http://cdn.baramex.me/libs/js/flashes-messages/flashs.css">
+    <script src="http://cdn.baramex.me/libs/js/flashes-messages/flashs.js"></script>
+
+    <link rel="stylesheet" href="./assets/styles/style.css">
+</head>
+
+<body style="margin: 0;">
+    <script src="./assets/js/util.js"></script>
+    <script>
+        loading();
+    </script>
+
+    <header class="padding abs main-header">
+        <nav class="left" style="height: 50px;">
+            <button class="reset" style="height: 50px;">
+                <img src="./assets/images/burger.png" alt="burger menu" width="50" class="pointer hoverG anim">
+            </button>
+        </nav>
+
+        <span>
+            <div class="left">
+                <img src="./assets/images/steve_head.png" alt="skin head" class="playerHead" width="40"
+                    replace="srcPlayerHead">
+            </div>
+            <span class="inline playerName bold" replace="playerName">player</span>
+        </span>
+
+        <div class="right relat" style="line-height: normal;">
+            <p class="left online-span"><span replace="online-players">0</span> online</p>
+            <div class="online-circle abs"></div>
+        </div>
+    </header>
+
+    <div class="player-container">
+        <img src="./assets/images/steve_body.png" alt="skin body" replace="srcPlayerBody" class="abs playerBody">
+        <button id="play" class="btn btn-play pointer noBorder">Play !</button>
+    </div>
+
+    <span><img src="./assets/images/arrow - settings.png" id="arrow-settings" class="arrow-bottom arw-btn-large"></span>
+
+    <div id="settings" class="hidden center-abs">
+        <h1>Settings</h1>
+
+        <div class="content">
+            <label for="ram-selector">Allocated RAM: <span id="ram-allocated">6 Go / 10 Go</span></label><br>
+            <input id="ram-selector" type="range" value="2" min="2" max="10"><br><br>
+
+            <label for="java-path">Java Path</label><br>
+            <input id="java-path" type="text" placeholder="C:/../java.exe"><br>
+            <button class="btn pointer noBorder" id="java-path-reset">reset</button><br><br>
+
+            <label>Resolution</label><br>
+            <div class="res-grid">
+                <select id="resolution-select">
+                    <option value="">-- presets --</option>
+                    <option>fullscreen</option>
+                    <option>auto</option>
+                    <option>800 x 600</option>
+                    <option>1600 x 900</option>
+                    <option>1920 x 1080</option>
+                    <option>2560 x 1440</option>
+                </select>
+                <input id="resolution-x" type="number" min="800" max="2560" list="res-x">
+                <span>x</span>
+                <input id="resolution-y" type="number" min="600" max="1440" list="res-y">
+            </div>
+            <datalist id="res-x">
+                <option value="800">
+                <option value="1600">
+                <option value="1920">
+                <option value="2560">
+            </datalist>
+            <datalist id="res-y">
+                <option value="600">
+                <option value="900">
+                <option value="1080">
+                <option value="1440">
+            </datalist>
+        </div>
+
+        <button class="btn pointer noBorder" id="btn-save">Save Changes</button>
+    </div>
+
+    <footer class="padding" style="position: fixed;width: calc(100% - 20px);bottom: 0;">
+        <div class="left social-network hidden">
+            <a href="https://discord.gg/88ZVH6auWT" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/discord.png" alt="our discord"></a> •
+            <a href="https://www.instagram.com/newempires_off/" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/instagram.png" alt="our instagram"></a> •
+            <a href="https://www.tiktok.com/@new_empires_off" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/tiktok.png" alt="our tiktok"></a> •
+            <a href="http://new-empires.net" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/web.png" alt="our website"></a>
+        </div>
+        <div class="right">
+            <span class="author-span">Developed by <a href="http://new-empires.net/" target="external">New
+                    Empires</a></span>
+        </div>
+    </footer>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html style="cursor: progress;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        window.$ = window.jquery = require("jquery");
+    </script>
+
+    <link rel="stylesheet" href="http://cdn.baramex.me/libs/js/flashes-messages/flashs.css">
+    <script src="http://cdn.baramex.me/libs/js/flashes-messages/flashs.js"></script>
+
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body style="margin: 0;">
+    <div id="dl-hidden" style="position: absolute;z-index: -1;top: 0;left: 0%;width: 100%;height: 100%;background-color: rgb(0 0 0 / 80%);"></div>
+    <progress class="pure-material-progress-circular" style="position: absolute;left: calc(50% - 45px);top: calc(50% - 45px);transform: translate(-50%, -50%);"></progress>
+    <h1 id="pct" style="color: rgb(200, 0, 0);position: absolute;left: 50%;top: calc(50%);transform: translate(-50%, -50%);margin: 0;font-size: 25px;">0%</h1>
+
+    <script src="./assets/util.js"></script>
+
+    <script>
+        ipc.on("download", (evt, data) => {
+            var pct = Math.round(100 * data.current / data.total * 100) / 100;
+            document.getElementById("dl-hidden").style.left = pct + "%";
+            document.getElementById("pct").innerHTML = Math.round(pct) + "%";
+        });
+
+        ipc.on("progress", (evt, data) => {
+            var pct = Math.round(100 * data.task / data.total * 100) / 100;
+            document.getElementById("dl-hidden").style.left = pct + "%";
+            document.getElementById("pct").innerHTML = Math.round(pct) + "%";
+        });
+    </script>
+
+    <footer style="position: fixed;bottom: -10px;right: 10px;font-size: 18px;color: white;">
+        <p>Developpé par <a href="https://github.com/baramex" style="color: #b6b6b6;" target="BLANK">baramex</a></p>
+    </footer>
+</body>
+
+</html>

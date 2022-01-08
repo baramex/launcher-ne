@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        window.$ = window.jquery = require("jquery");
+    </script>
+
+    <link rel="stylesheet" href="http://cdn.baramex.me/libs/js/flashes-messages/flashs.css">
+    <script src="http://cdn.baramex.me/libs/js/flashes-messages/flashs.js"></script>
+
+    <link rel="stylesheet" href="./assets/styles/style.css">
+</head>
+
+<body style="margin: 0;">
+    <script src="./assets/js/util.js"></script>
+    <script>
+        loading();
+    </script>
+
+    <header class="padding abs main-header" style="background-color: transparent;backdrop-filter: unset;">
+        <nav class="left" style="height: 50px;">
+            <button class="reset" style="height: 50px;">
+                <img src="./assets/images/burger.png" alt="burger menu" width="50" class="pointer hoverG anim">
+            </button>
+        </nav>
+
+        <div class="right relat" style="line-height: normal;">
+            <p class="left online-span noMargin"><span replace="online-players">0</span> online</p>
+            <div class="online-circle abs"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="borderR abs login-container" style="backdrop-filter: blur(3px);">
+            <header class="borderRT LaPadding">
+                <h1 class="centerT noMargin">Compte Mojang</h1>
+            </header>
+            <div class="LaPadding">
+                <div class="item-grid">
+                    <div>
+                        <input id="email" class="noBG hMargin borderR emailIcon anim padding" type="email"
+                            placeholder="Adresse email"><br />
+                    </div>
+                    <div>
+                        <input id="password" class="noBG hMargin borderR passwordIcon anim padding" type="password"
+                            placeholder="Mot de passe"><br /><br />
+                    </div>
+                </div>
+                <button id="login" class="noBorder pointer btn login-btn">Se connecter</button>
+
+                <div class="grid-1fr-60px-1fr loginOR">
+                    <div class="autoMarginTB line"></div>
+                    <h2 class="centerT">OU</h2>
+                    <div class="autoMarginTB line"></div>
+                </div>
+
+                <button id="microsoft" class="centerT reset"><img src="./assets/images/microsoft.png"
+                        class="pointer anim hoverG" style="width: 70%;"></button>
+            </div>
+        </div>
+
+        <span><img src="./assets/images/arrow.png" id="arrow-activities" class="arrow-bottom"></span>
+
+        <div class="center-abs hidden" id="activities">
+            <header class="centerT">
+                <img class="logo" alt="logo" src="./assets/images/logo.jpg">
+            </header>
+            <div class="activities">
+                <ul>
+                    <li>
+                        <span class="number">01-</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, vitae.
+                    </li>
+                    <li>
+                        <span class="number">02-</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab,
+                        quasi?
+                    </li>
+                    <li>
+                        <span class="number">03-</span> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse,
+                        quidem?
+                    </li>
+                </ul>
+            </div>
+            <button class="btn pointer noBorder">learn more...</button>
+        </div>
+    </main>
+
+    <!--<div class="selector-options" id="select-mode" style="width: 200px;margin: 10px;">
+        <div class="option">Sombre</div>
+        <div class="option">Clair</div>
+        <div class="selector"></div>
+    </div>-->
+
+    <footer class="padding" style="position: fixed;width: calc(100% - 20px);bottom: 0;">
+        <div class="left social-network">
+            <a href="https://discord.gg/88ZVH6auWT" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/discord.png" alt="our discord"></a> •
+            <a href="https://www.instagram.com/newempires_off/" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/instagram.png" alt="our instagram"></a> •
+            <a href="https://www.tiktok.com/@new_empires_off" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/tiktok.png" alt="our tiktok"></a> •
+            <a href="http://new-empires.net" target="external"><img class="pointer anim hoverG"
+                    src="./assets/images/web.png" alt="our website"></a>
+        </div>
+        <div class="right">
+            <span class="author-span">Developed by <a href="http://new-empires.net/" target="external">New
+                    Empires</a></span>
+        </div>
+    </footer>
+
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
