@@ -7,12 +7,12 @@ const express = require("express");
 const webApp = express();
 webApp.listen(65230);
 const axios = require("axios");
-const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 var accessToken = "";
 
 const RPC = require("discord-rpc");
-const clientId = require("./tokens.json").clientID;
+const clientId = process.env.CLIENT_ID;
 const client = new RPC.Client({ transport: 'ipc' });
 
 /**
@@ -26,7 +26,7 @@ const activity = {
         {
 
             label: "Discord Server",
-            url: require("./tokens.json").discordInvite
+            url: process.env.INVITE
         }
     ],
     startTimestamp: new Date().getTime(),
@@ -84,7 +84,7 @@ app.whenReady().then(() => {
 });
 
 autoUpdater.setFeedURL({
-    url: require("./tokens.json").updateUrl + "/" + os.platform() + "_" + os.arch() + "/" + app.getVersion()
+    url: process.env.UPDATE_URL + "/" + os.platform() + "_" + os.arch() + "/" + app.getVersion()
 });
 
 /**
@@ -92,9 +92,8 @@ autoUpdater.setFeedURL({
  */
 var mainWindow;
 
-const AUTH_URL = require("./tokens.json").authUrl;
+const {AUTH_URL, PACK_URL} = process.env;
 const ROOT_PATH = path.join((process.env.APPDATA || (process.platform == 'darwin' ? path.join(process.env.HOME, "Library", "Preferences") : path.join(process.env.HOME, ".local", "share"))), ".new-empires-launcher");
-const PACK_URL = require("./tokens.json").packUrl;
 const RESOURCES_PATH = path.join(__dirname, "resources");
 const ASSETS_PATH = path.join(RESOURCES_PATH, "assets");
 
@@ -340,7 +339,7 @@ var code = "";
 
 const config = {
     auth: {
-        clientId: require("./tokens.json").clientIDAzure
+        clientId: process.env.CLIENT_ID_AZURE
     }
 };
 

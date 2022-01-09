@@ -23,11 +23,11 @@
     "dependencies": {
         "axios": "^0.24.0",
         "discord-rpc": "^4.0.1",
+        "dotenv": "^10.0.0",
         "electron-squirrel-startup": "^1.0.0",
         "express": "^4.17.2",
         "find-java-home": "^1.2.2",
-        "jquery": "^3.6.0",
-        "jsonwebtoken": "^8.5.1"
+        "jquery": "^3.6.0"
     },
     "description": "New empires' launcher by Baramex",
     "config": {
