@@ -4,6 +4,8 @@
     --text-white: #f1f1f1;
     --text-gray: #a1a1a1;
     --dark: #272727;
+    --dark-input: #353535;
+    --light-dark: #383838;
     --light: #adadad;
     --error: #FF3333;
     --light-red: #a10c0c;
@@ -30,6 +32,22 @@
 
 html, body {
     height: 100%;
+}
+
+body[lang="en"] [lang="fr"] {
+    display: none;
+}
+
+body[lang="en"] [lang="en"] {
+    display: initial;
+}
+
+body[lang="fr"] [lang="en"] {
+    display: none;
+}
+
+body[lang="fr"] [lang="fr"] {
+    display: initial;
 }
 
 body {
@@ -155,7 +173,7 @@ body {
 }
 
 .anim {
-    transition-duration: 0.3s;
+    transition: 0.3s;
 }
 
 .autoMarginTB {
@@ -454,7 +472,7 @@ input[type="text"]:focus {
 }
 
 #settings {
-    z-index: 2;
+    z-index: 4;
     color: var(--text-white);
     height: 100vh;
     text-align: center;
@@ -507,6 +525,170 @@ input[type="text"]:focus {
     color: orange !important;
 }
 
+#logout {
+    background-color: var(--light-red);
+    color: var(--text-white);
+    position: absolute;
+    bottom: 100px;
+    padding: 12px 0;
+    width: calc(100% - 20px);
+}
+
+#logout::before {
+    background-color: var(--red);
+}
+
+#menu .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    position: absolute;
+    bottom: 155px;
+    width: calc(100% - 20px);
+}
+
+input:disabled {
+    background-color: var(--dark-input) !important;
+    color: var(--text-gray) !important;
+    cursor: not-allowed;
+}
+
+#discord-account {
+    margin-top: 5px;
+}
+
+#discord-account-field {
+    width: calc(100% - 40px) !important;
+    float: left;
+    height: 35px;
+    margin: 0 !important;
+}
+
+#edit-discord-account {
+    width: 35px;
+    float: right;
+    padding: 0;
+    background-color: var(--input-color);
+    height: 35px;
+}
+
+#edit-discord-account::before {
+    background-color: var(--dark-input);
+}
+
+#edit-discord-account img {
+    width: 20px;
+}
+
+#menu .buttons button {
+    background-color: var(--input-color);
+}
+
+#menu .buttons button a {
+    color: var(--text-white);
+    text-decoration: none;
+}
+
+#menu .buttons button::before {
+    background-color: var(--light-dark);
+}
+
+#menu .version {
+    color: var(--text-gray);
+    position: absolute;
+    bottom: 70px;
+    left: 5px;
+    font-size: 15px;
+}
+
+#menu .icon8 {
+    color: var(--text-gray);
+    position: absolute;
+    bottom: 70px;
+    right: 5px;
+    font-size: 15px;
+}
+
+#menu select {
+    width: calc(100% - 15px);
+    color: var(--text-gray);
+}
+
+#menu input::placeholder {
+    color: rgba(200, 200, 200, .8);
+}
+
+#menu input, #menu select {
+    outline: none;
+    background-color: var(--input-color);
+    color: var(--text-white);
+    box-shadow: none;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 16px;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+#menu {
+    width: 300px;
+    position: absolute;
+    left: -100%;
+    transition: 0.3s ease-in;
+    background-color: var(--dark);
+    height: 100%;
+    z-index: 2;
+    padding: 65px 10px 0 10px;
+    color: var(--text-white);
+}
+
+.burger {
+    width: 45px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.burger span, .burger span::before, .burger span::after {
+    width: 100%;
+    height: 5px;
+    background-color: var(--text-white);
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50px;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.burger span::before, .burger span::after {
+    content: "";
+    top: 0;
+}
+
+.burger span::before {
+    transform: translateY(-15px);
+}
+
+.burger span::after {
+    transform: translateY(15px);
+}
+
+.burger.active span {
+    background-color: transparent;
+}
+
+.burger.active span::before {
+    transform: rotate(45deg);
+}
+
+.burger.active span::after {
+    transform: rotate(-45deg);
+}
+
 #settings select {
     width: calc(100% - 15px);
     color: var(--text-gray);
@@ -524,7 +706,7 @@ input[type="text"]:focus {
     text-align: center;
 }
 
-#settings span {
+#settings span.gray {
     color: var(--text-gray);
     text-align: center;
     margin: auto 0;
@@ -679,7 +861,7 @@ img {
 
 .playerHead {
     vertical-align: middle;
-    margin: 0 10px;
+    margin: 0 10px 0 65px;
     border: 1px solid var(--text-white);
     border-radius: 5px;
 }
@@ -701,6 +883,7 @@ img {
     height: 100%;
     z-index: 1;
     backdrop-filter: blur(4px);
+    transition: opacity 0.3s;
 }
 
 .pure-material-progress-circular {

@@ -3,6 +3,9 @@ const passwordField = document.getElementById("password");
 const loginBtn = document.getElementById("login");
 const microsoftBtn = document.getElementById("microsoft");
 
+emailField.placeholder = lang=="fr"?"Adresse email":"Username";
+passwordField.placeholder = lang=="fr"?"Mot de passe":"Password";
+
 ipc.on("updater.checking", (evt, status) => {
     showChecking();
 });
@@ -55,60 +58,6 @@ loginBtn.addEventListener("click", () => {
 
     ipc.send("login", { username: email, password, type: "mojang" });
 });
-
-var messages = {
-    ForbiddenOperationException: [{
-        fr: "Adresse email ou mot de passe invalide",
-        en: "Invalid username or password",
-        message: "Invalid credentials. Invalid username or password."
-    },
-    {
-        fr: "Adresse email ou mot de passe invalide",
-        en: "Invalid username or password (use email as username)",
-        message: "Invalid credentials. Account migrated, use email as username."
-    },
-    {
-        fr: "L'adresse email et le mot de passe doivent contenir au moins 3 caractères",
-        en: "Username and password must contain at least 3 characters",
-        message: "Forbidden"
-    },
-    {
-        fr: "Trop de tentatives de connexion, merci d'attendre quelques secondes avant de recommencer",
-        en: "Too many login attempts, please wait a few seconds before starting over",
-        message: "Invalid credentials."
-    },
-    {
-        fr: "Token invalid",
-        en: "Invalid token",
-        message: "Invalid token"
-    },
-    {
-        fr: "Une autre session utilise déjà ce token",
-        en: "This token was used in another session",
-        message: "Token does not exist."
-    }
-    ],
-    IllegalArgumentException: {
-        fr: "Une autre session utilise déjà ce token",
-        en: "This token was used in another session"
-    },
-    GoneException: {
-        fr: "Compte migré chez microsoft",
-        en: "Account migrated to microsoft"
-    },
-    ExpireLogin: {
-        fr: "L'authentification microsoft a expiré, vous devez vous en connectez en moins de 10 minutes",
-        en: "Microsoft authentication has expired, you must log in within 10 minutes"
-    },
-    InvalidMinecraftLicense: {
-        fr: "Votre compte mojang n'est pas relié à une licence minecraft",
-        en: "Your mojang account is not linked to a minecraft license"
-    },
-    NoMinecraftAccount: {
-        fr: "Vous n'avez pas de compte minecraft associé à votre compte microsoft",
-        en: "You don't have a minecraft account linked to your microsoft account"
-    }
-};
 
 ipc.on("login.error", (event, error) => {
     clearStorage();

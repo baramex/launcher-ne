@@ -18,17 +18,12 @@
 
 <body style="margin: 0;">
     <script src="./assets/js/util.js"></script>
-    <script>
-        loading();
-    </script>
+
+    <button class="reset burger left tbMargin lbMargin" id="burger">
+        <span></span>
+    </button>
 
     <header class="padding abs main-header">
-        <nav class="left" style="height: 50px;">
-            <button class="reset" style="height: 50px;">
-                <img src="./assets/images/burger.png" alt="burger menu" width="50" class="pointer hoverG anim">
-            </button>
-        </nav>
-
         <span>
             <div class="left">
                 <img src="./assets/images/steve_head.png" alt="skin head" class="playerHead" width="40"
@@ -38,30 +33,34 @@
         </span>
 
         <div class="right relat" style="line-height: normal;">
-            <p class="left online-span"><span replace="online-players">0</span> online</p>
+            <p class="left online-span"><span replace="online-players">0</span> <span lang="en">online</span><span
+                    lang="fr">en ligne</span></p>
             <div class="online-circle abs"></div>
         </div>
     </header>
 
     <div class="player-container">
         <img src="./assets/images/steve_body.png" alt="skin body" replace="srcPlayerBody" class="abs playerBody">
-        <button id="play" class="btn btn-play pointer noBorder">Play !</button>
+        <button id="play" class="btn btn-play pointer noBorder"><span lang="en">Play !</span><span lang="fr">Jouer
+                !</span></button>
     </div>
 
     <span><img src="./assets/images/arrow - settings.png" id="arrow-settings" class="arrow-bottom arw-btn-large"></span>
 
     <div id="settings" class="hidden center-abs">
-        <h1>Settings</h1>
+        <h1><span lang="en">Settings</span><span lang="fr">Paramètres</span></h1>
 
         <div class="content">
-            <label for="ram-selector">Allocated RAM: <span id="ram-allocated">6 Go / 10 Go</span></label><br>
+            <label for="ram-selector"><span lang="en">Allocated RAM</span><span lang="fr">Ram allouée</span>: <span
+                    class="gray" id="ram-allocated">6 Go / 10 Go</span></label><br>
             <input id="ram-selector" type="range" value="2" min="2" max="10"><br><br>
 
-            <label for="java-path">Java Path</label><br>
+            <label for="java-path"><span lang="en">Java Path</span><span lang="fr">Chemin java</span></label><br>
             <input id="java-path" type="text" placeholder="C:/../java.exe"><br>
-            <button class="btn pointer noBorder" id="java-path-reset">reset</button><br><br>
+            <button class="btn pointer noBorder" id="java-path-reset"><span lang="en">Reset</span><span lang="fr">Par
+                    défaut</span></button><br><br>
 
-            <label>Resolution</label><br>
+            <label><span lang="en">Resolution</span><span lang="fr">Résolution</span></label><br>
             <div class="res-grid">
                 <select id="resolution-select">
                     <option value="">-- presets --</option>
@@ -73,7 +72,7 @@
                     <option>2560 x 1440</option>
                 </select>
                 <input id="resolution-x" type="number" min="800" max="2560" list="res-x">
-                <span>x</span>
+                <span class="gray">x</span>
                 <input id="resolution-y" type="number" min="600" max="1440" list="res-y">
             </div>
             <datalist id="res-x">
@@ -90,22 +89,49 @@
             </datalist>
         </div>
 
-        <button class="btn pointer noBorder" id="btn-save">Save Changes</button>
+        <button class="btn pointer noBorder" id="btn-save"><span lang="en">Save Changes</span><span
+                lang="fr">Sauvegarder</span></button>
+    </div>
+
+    <div id="menu">
+        <div class="content">
+            <label for="lang"><span lang="en">Lang</span><span lang="fr">Langue</span></label>
+            <select id="lang" replace="valueLang">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+            </select><br /><br />
+
+            <label for="discord-account-field"><span lang="en">Discord account</span><span lang="fr">Compte
+                    discord</span></label>
+            <div id="discord-account">
+                <input type="text" id="discord-account-field" replace="valueDiscordAccount" disabled>
+                <button id="edit-discord-account" class="btn pointer reset">
+                    <img src="./assets/images/edit.png">
+                </button>
+            </div>
+            <br /><br />
+
+            <div class="buttons">
+                <button class="btn reset pointer">
+                    <a target="external" href="http://new-empires.net/"><span lang="en">Website</span><span
+                            lang="fr">Site Web</span></a>
+                </button>
+                <button class="btn reset pointer">
+                    <a target="external" href="https://discord.gg/88ZVH6auWT">Discord</a>
+                </button>
+            </div>
+            <button class="btn reset pointer" id="logout"><span lang="en">Disconnect</span><span lang="fr">Se
+                    déconnecter</span></button>
+
+            <span replace="version" class="version">v1.0</span>
+            <a target="external" href="https://icones8.fr/" class="icon8">icones8 (some launcher's icons)</a>
+        </div>
     </div>
 
     <footer class="padding" style="position: fixed;width: calc(100% - 20px);bottom: 0;">
-        <div class="left social-network hidden">
-            <a href="https://discord.gg/88ZVH6auWT" target="external"><img class="pointer anim hoverG"
-                    src="./assets/images/discord.png" alt="our discord"></a> •
-            <a href="https://www.instagram.com/newempires_off/" target="external"><img class="pointer anim hoverG"
-                    src="./assets/images/instagram.png" alt="our instagram"></a> •
-            <a href="https://www.tiktok.com/@new_empires_off" target="external"><img class="pointer anim hoverG"
-                    src="./assets/images/tiktok.png" alt="our tiktok"></a> •
-            <a href="http://new-empires.net" target="external"><img class="pointer anim hoverG"
-                    src="./assets/images/web.png" alt="our website"></a>
-        </div>
         <div class="right">
-            <span class="author-span">Developed by <a href="http://new-empires.net/" target="external">New
+            <span class="author-span"><span lang="en">Developed by</span><span lang="fr">Développé par</span> <a
+                    href="http://new-empires.net/" target="external">New
                     Empires</a></span>
         </div>
     </footer>

@@ -26,7 +26,7 @@ const activity = {
         {
 
             label: "Discord Server",
-            url: process.env.INVITE
+            url: process.env.DISCORD_INVITE
         }
     ],
     startTimestamp: new Date().getTime(),
@@ -57,7 +57,7 @@ webApp.get("/discord-auth", (req, res) => {
     if (!req.query.code) return res.status(400).send("error");
     const { code } = req.query;
     axios.post(AUTH_URL + "/discord-auth", { code, accessToken, redirectUri: req.protocol + "://" + req.headers.host + req.path }, { headers: { "Content-Type": "application/json" } }).then(data => {
-        mainWindow.webContents.send("discord-auth.done", data.data);
+        mainWindow.webContents.send("discord-auth.done", {addToServer: data.data?.addToServer, discord: data.data?.discord});
     }).catch(err => {
         mainWindow.webContents.send("discord-auth.error", err.response.data || "Unexpected error");
     });
@@ -123,7 +123,7 @@ function createWindow() {
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
     });
-    mainWindow.loadURL(path.join(RESOURCES_PATH, "app.html")).then(() => {
+    mainWindow.loadURL(path.join(RESOURCES_PATH, "index.html")).then(() => {
         /*autoUpdater.checkForUpdates();
 
         autoUpdater.addListener("checking-for-update", () => {
@@ -157,7 +157,7 @@ ipcMain.on("login-microsoft", (evt, data) => {
         var auth = { accessToken: res.auth.access_token, type: "microsoft", refreshToken: res.refreshToken };
         accessToken = auth.accessToken;
         mainWindow.loadURL(path.join(RESOURCES_PATH, "app.html")).then(() => {
-            mainWindow.webContents.send("login.done", { user, ram: os.totalmem(), javaHome: javaHome, auth, discordLinked: res.discordLinked, type: res.type });
+            mainWindow.webContents.send("login.done", { user, ram: os.totalmem(), javaHome: javaHome, auth, type: res.type, discord: res.discord });
         });
     }).catch(err => {
         evt.sender.send("login-microsoft.error", err);
@@ -167,7 +167,7 @@ ipcMain.on("login-microsoft", (evt, data) => {
 ipcMain.on("logout", (evt, data) => {
     accessToken = "";
     if (data.type == "mojang") {
-        axios.post("mojang/invalidate", { accessToken: data.accessToken, clientToken: data.clientToken }, { headers: { "Content-Type": "application/json" } }).then(() => {
+        axios.post(AUTH_URL + "/mojang/invalidate", { accessToken: data.accessToken, clientToken: data.clientToken }, { headers: { "Content-Type": "application/json" } }).then(() => {
             mainWindow.loadURL(path.join(RESOURCES_PATH, "index.html")).then(() => {
                 mainWindow.webContents.send("logout.done");
             });
@@ -186,7 +186,7 @@ ipcMain.on("login", (evt, data) => {
         if (!account.selectedProfile) return evt.sender.send("login.error", { error: "InvalidMinecraftLicense", errorMessage: "no-message" });
         mainWindow.loadURL(path.join(RESOURCES_PATH, "app.html")).then(() => {
             accessToken = account.accessToken;
-            mainWindow.webContents.send("login.done", { user: account.selectedProfile, ram: os.totalmem(), javaHome: javaHome, auth: { accessToken: account.accessToken, clientToken: account.clientToken, type: "mojang" }, discordLinked: account.discordLinked, type: account.type });
+            mainWindow.webContents.send("login.done", { user: account.selectedProfile, ram: os.totalmem(), javaHome: javaHome, auth: { accessToken: account.accessToken, clientToken: account.clientToken, type: "mojang" }, discord: account.discord, type: account.type });
         });
     }).catch(err => {
         evt.sender.send("login.error", err);
@@ -206,7 +206,7 @@ ipcMain.on("login-token", (evt, auth) => {
             data = data.data;
             mainWindow.loadURL(path.join(RESOURCES_PATH, "app.html")).then(() => {
                 if (data.type == "refresh") accessToken = data.accessToken;
-                mainWindow.webContents.send("login.done", { ...(data.type == "refresh" ? { user: data.selectedProfile, ram: os.totalmem(), javaHome, auth: { accessToken: data.accessToken, clientToken: data.clientToken, type: "mojang" } } : {}), discordLinked: data.discordLinked, type: data.type });
+                mainWindow.webContents.send("login.done", { ...(data.type == "refresh" ? { user: data.selectedProfile, ram: os.totalmem(), javaHome, auth: { accessToken: data.accessToken, clientToken: data.clientToken, type: "mojang" } } : {}), discord: data.discord, type: data.type });
             });
         }).catch(err => {
             if (!err || !err.response) return evt.sender.send("login-token.error", "Unexpected error");
@@ -223,7 +223,7 @@ ipcMain.on("login-token", (evt, auth) => {
                 accessToken = auth.accessToken;
             }
             mainWindow.loadURL(path.join(RESOURCES_PATH, "app.html")).then(() => {
-                mainWindow.webContents.send("login.done", { ...(data.type == "refresh" ? { user, ram: os.totalmem(), javaHome, auth } : {}), discordLinked: data.discordLinked, type: data.type });
+                mainWindow.webContents.send("login.done", { ...(data.type == "refresh" ? { user, ram: os.totalmem(), javaHome, auth } : {}), discord: data.discord, type: data.type });
             });
         }).catch(err => {
             if (!err || !err.response) return evt.sender.send("login-token.error", "Unexpected error");

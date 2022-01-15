@@ -1,14 +1,17 @@
 ipc.on("login.done", (evt, data) => {
-    if (!data.discordLinked) {
+    if (!data.discord) {
         discordLogin();
     }
-    if (data.type != "refresh" && data.type != "login") return load();
+
     var javaHome = localStorage.getItem("javaHome");
+    if (!java(javaHome)) localStorage.setItem("javaHome", data.javaHome);
+    localStorage.setItem("ram", data.ram);
 
     if (data.auth) localStorage.setItem("auth", JSON.stringify(data.auth));
-    localStorage.setItem("ram", data.ram);
     if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
-    if (!java(javaHome)) localStorage.setItem("javaHome", data.javaHome);
+
+    localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user")), discord: data.discord }));
+
     load();
 });
 
@@ -19,15 +22,35 @@ ipc.on("discord-auth.done", (evt, data) => {
     else str = "Your discord account is now linked to minecraft, its access token has been deleted.";
 
     if (data.addToServer) {
-        if (lang == "fr") str += "Vous avez été rajouté au serveur discord New Empires.";
-        else str += "<br/>You have been added to discord server New Empires.";
+        if (lang == "fr") str += " Vous avez été rajouté au serveur discord New Empires.";
+        else str += " You have been added to discord server New Empires.";
     }
     popup("valid", str);
+
+    localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user")), discord: data.discord }));
 });
 
 ipc.on("discord-auth.error", (evt, err) => {
-    console.log(err);
-    popup("error", err, false, "error");
+    var err = getMessageError(err);
+
+    var content = document.createElement("div");
+    var txt = document.createElement("p");
+    txt.innerText = err;
+    var a = document.createElement("a");
+    a.id = "discord-login";
+    a.href = "https://discord.com/api/oauth2/authorize?client_id=918066264029671494&redirect_uri=http%3A%2F%2Flocalhost%3A65230%2Fdiscord-auth&response_type=code&scope=identify%20guilds%20guilds.join"/* https://discord.com/api/oauth2/authorize?client_id=914936766744629330&redirect_uri=http%3A%2F%2Flocalhost%3A65230%2Fdiscord-auth&response_type=code&scope=identify%20guilds%20guilds.join */;
+    a.target = "external";
+    var img = document.createElement("img");
+    img.width = "40";
+    img.src = "./assets/images/large-discord.png";
+    var span = document.createElement("span");
+    span.innerText = lang == "fr" ? "Se connecter avec discord" : "Login with discord";
+    a.append(img, span);
+    content.append(txt, a);
+
+    popup("error", content, false, "error");
+
+    reloadHyperLinks();
 });
 
 function load() {
@@ -36,17 +59,19 @@ function load() {
             el.innerHTML = JSON.parse(localStorage.getItem("user")).name;
         });
 
-        document.querySelectorAll("img[replace='srcPlayerHead'").forEach(el => {
+        document.querySelectorAll("img[replace='srcPlayerHead']").forEach(el => {
             el.src = "http://cravatar.eu/helmavatar/" + JSON.parse(localStorage.getItem("user")).name + "/64.png"
         });
 
-        document.querySelectorAll("img[replace='srcPlayerBody'").forEach(el => {
+        document.querySelectorAll("img[replace='srcPlayerBody']").forEach(el => {
             el.src = "https://minotar.net/armor/body/" + JSON.parse(localStorage.getItem("user")).name + "/256.png";
+        });
+
+        document.querySelectorAll("[replace='valueDiscordAccount']").forEach(el => {
+            el.value = JSON.parse(localStorage.getItem("user")).discord;
         });
     }
     loadSettings();
-
-    removeLoading();
 }
 
 function loadSettings() {
@@ -105,7 +130,7 @@ document.body.addEventListener("wheel", ev => {
         if (ev.wheelDeltaY <= -100 && settings.classList.contains("hidden") && document.getElementsByClassName("hidden-settings").length == 0) {
             loadSettings();
             addErrored();
-            hiddenTab("hidden-settings");
+            hiddenTab("hidden-settings", 3);
             settings.classList.remove("hidden");
             settings.animate([{
                 transform: "translate(-50%, 50%)"
@@ -122,7 +147,7 @@ document.body.addEventListener("wheel", ev => {
         if (ev.wheelDeltaY >= 100 && settings.getAnimations().length == 0 && !settings.classList.contains("hidden") && document.getElementsByClassName("hidden-settings")[0]?.getAnimations().length == 0) {
             var v = wantToQuit();
             if (v == "changes" || v == "errors") {
-                if (!document.getElementById("popup-changes")) return popup("error", lang == "fr" ? "Êtes vous sûr de vouloir quitter sans enregistrer ?" : "Are you sure you want to quit without saving ?", true, "popup-changes", 2, true, () => {
+                if (!document.getElementById("popup-changes")) return popup("error", lang == "fr" ? "Êtes vous sûr de vouloir quitter sans enregistrer ?" : "Are you sure you want to quit without saving ?", true, "popup-changes", 4, true, () => {
                     closeSettings();
                 });
                 else return;
@@ -331,27 +356,12 @@ function getRamOS() {
     return localStorage.getItem("ram") / 1.074e+9 || 8;
 }
 
-/*
-if (localStorage.getItem("javaHome") || user.javaHome) {
-    if (!user.javaHome) {
-        document.getElementById("hidden-tab-settings").style.zIndex = "1";
-        document.getElementById("hidden-tab-settings").style.opacity = "1";
-        document.getElementById("hidden-tab-settings").style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+var logoutBtn = document.getElementById("logout");
+logoutBtn.addEventListener("click", () => {
+    ipc.send("logout", JSON.parse(localStorage.getItem("auth")));
 
-        document.getElementById("content-error").innerHTML = "Vous devez avoir <a href='https://www.java.com/' target='_blank'>java</a> pour lancer minecraft !";
-        document.getElementById("error-popup").style.display = "initial";
-        setTimeout(() => document.getElementById("error-popup").style.opacity = 1, 1);
-    }
-
-    document.getElementById("javaHome").value = localStorage.getItem("javaHome") || user.javaHome;
-}
-
-function disconnect() {
-    ipc.send("logout");
-
-    localStorage.removeItem("user");
-    localStorage.removeItem("auth");
-}*/
+    clearStorage();
+});
 
 function java(java) {
     if (!java) return false;

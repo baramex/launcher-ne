@@ -22,15 +22,14 @@
         loading();
     </script>
 
-    <header class="padding abs main-header" style="background-color: transparent;backdrop-filter: unset;">
-        <nav class="left" style="height: 50px;">
-            <button class="reset" style="height: 50px;">
-                <img src="./assets/images/burger.png" alt="burger menu" width="50" class="pointer hoverG anim">
-            </button>
-        </nav>
+    <button class="reset burger left tbMargin lbMargin" id="burger">
+        <span></span>
+    </button>
 
+    <header class="padding abs main-header" style="background-color: transparent;backdrop-filter: unset;">
         <div class="right relat" style="line-height: normal;">
-            <p class="left online-span noMargin"><span replace="online-players">0</span> online</p>
+            <p class="left online-span noMargin"><span replace="online-players">0</span> <span
+                    lang="en">online</span><span lang="fr">en ligne</span></p>
             <div class="online-circle abs"></div>
         </div>
     </header>
@@ -38,7 +37,7 @@
     <main>
         <div class="borderR abs login-container" style="backdrop-filter: blur(3px);">
             <header class="borderRT LaPadding">
-                <h1 class="centerT noMargin">Compte Mojang</h1>
+                <h1 class="centerT noMargin"><span lang="en">Mojang Account</span><span lang="fr">Compte Mojang</span></h1>
             </header>
             <div class="LaPadding">
                 <div class="item-grid">
@@ -51,11 +50,11 @@
                             placeholder="Mot de passe"><br /><br />
                     </div>
                 </div>
-                <button id="login" class="noBorder pointer btn login-btn">Se connecter</button>
+                <button id="login" class="noBorder pointer btn login-btn"><span lang="en">Login</span><span lang="fr">Se connecter</span></button>
 
                 <div class="grid-1fr-60px-1fr loginOR">
                     <div class="autoMarginTB line"></div>
-                    <h2 class="centerT">OU</h2>
+                    <h2 class="centerT"><span lang="en">OR</span><span lang="fr">OU</span></h2>
                     <div class="autoMarginTB line"></div>
                 </div>
 
@@ -86,15 +85,32 @@
                     </li>
                 </ul>
             </div>
-            <button class="btn pointer noBorder">learn more...</button>
+            <button class="btn pointer noBorder"><span lang="en">Learn more</span><span lang="fr">Lire plus</span>...</button>
         </div>
     </main>
 
-    <!--<div class="selector-options" id="select-mode" style="width: 200px;margin: 10px;">
-        <div class="option">Sombre</div>
-        <div class="option">Clair</div>
-        <div class="selector"></div>
-    </div>-->
+    <div id="menu">
+        <div class="content">
+            <label for="lang"><span lang="en">Lang</span><span lang="fr">Langue</span></label>
+            <select id="lang" replace="valueLang">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+            </select><br /><br />
+
+            <div class="buttons" style="bottom: 100px;">
+                <button class="btn reset pointer">
+                    <a target="external" href="http://new-empires.net/"><span lang="en">Website</span><span
+                            lang="fr">Site Web</span></a>
+                </button>
+                <button class="btn reset pointer">
+                    <a target="external" href="https://discord.gg/88ZVH6auWT">Discord</a>
+                </button>
+            </div>
+
+            <span replace="version" class="version">v1.0</span>
+            <a target="external" href="https://icones8.fr/" class="icon8">icones8 (some launcher's icons)</a>
+        </div>
+    </div>
 
     <footer class="padding" style="position: fixed;width: calc(100% - 20px);bottom: 0;">
         <div class="left social-network">
@@ -108,7 +124,8 @@
                     src="./assets/images/web.png" alt="our website"></a>
         </div>
         <div class="right">
-            <span class="author-span">Developed by <a href="http://new-empires.net/" target="external">New
+            <span class="author-span"><span lang="en">Developed by</span><span lang="fr">Développé par</span> <a
+                    href="http://new-empires.net/" target="external">New
                     Empires</a></span>
         </div>
     </footer>
